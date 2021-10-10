@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Flickd',
       initialRoute: 'home',
       routes: {
-        'home': (_) => const MainPage(),
+        'home': (_) => MainPage(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

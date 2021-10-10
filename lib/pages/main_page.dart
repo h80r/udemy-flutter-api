@@ -3,18 +3,28 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// ignore: must_be_immutable
 class MainPage extends ConsumerWidget {
-  const MainPage({Key? key}) : super(key: key);
+  MainPage({Key? key}) : super(key: key);
+
+  var _deviceHeight = 0.0;
+  var _deviceWidth = 0.0;
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
+    _deviceHeight = MediaQuery.of(context).size.height;
+    _deviceWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
         constraints: const BoxConstraints.expand(),
         child: Stack(
           alignment: Alignment.center,
-          children: [_backgroundWidget()],
+          children: [
+            _backgroundWidget(),
+            _foregroundWidgets(),
+          ],
         ),
       ),
     );
@@ -38,6 +48,55 @@ class MainPage extends ConsumerWidget {
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.2),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _foregroundWidgets() {
+    return Container(
+      padding: EdgeInsets.only(top: _deviceHeight * 0.02),
+      width: _deviceWidth * 0.88,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _topBarWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget _topBarWidget() {
+    return Container(
+      height: _deviceHeight * 0.08,
+      decoration: BoxDecoration(
+        color: Colors.black54,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _searchFieldWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget _searchFieldWidget() {
+    return SizedBox(
+      width: _deviceWidth * 0.5,
+      height: _deviceHeight * 0.05,
+      child: TextFormField(
+        onFieldSubmitted: (_) => {},
+        style: const TextStyle(color: Colors.white),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.white24,
+          ),
+          hintStyle: TextStyle(color: Colors.white54),
+          hintText: 'Search....',
         ),
       ),
     );
