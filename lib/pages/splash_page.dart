@@ -10,6 +10,7 @@ import 'package:flickd_app/models/app_config.dart';
 
 // Services
 import 'package:flickd_app/services/http_service.dart';
+import 'package:flickd_app/services/movie_service.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({
@@ -43,6 +44,8 @@ class _SplashPageState extends State<SplashPage> {
     );
 
     getIt.registerSingleton<HttpService>(HttpService());
+
+    getIt.registerSingleton<MovieService>(MovieService());
   }
 
   @override

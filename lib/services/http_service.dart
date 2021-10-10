@@ -8,19 +8,20 @@ import 'package:get_it/get_it.dart';
 // Models
 
 class HttpService {
-  final dio = Dio();
-  final getIt = GetIt.instance;
+  final _dio = Dio();
+  final _getIt = GetIt.instance;
 
-  late String _baseUrl;
-  late String _apiKey;
+  late final String _baseUrl;
+  late final String _apiKey;
 
   HttpService() {
-    final config = getIt.get<AppConfig>();
+    final config = _getIt.get<AppConfig>();
     _baseUrl = config.baseApiUrl;
     _apiKey = config.apiKey;
   }
 
   Future<Response?> get(String path, {Map<String, dynamic>? userQuery}) async {
+    _apiKey = 'fafas';
     try {
       final url = _baseUrl + path;
       final query = <String, dynamic>{
@@ -30,7 +31,7 @@ class HttpService {
 
       query.addAll(userQuery ?? {});
 
-      return await dio.get(url, queryParameters: query);
+      return await _dio.get(url, queryParameters: query);
     } on DioError catch (e) {
       print('Unable to perform get request');
       print('DioError: $e');
