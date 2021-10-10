@@ -15,6 +15,21 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(
+      title: 'Flickd',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: Center(
+        child: Container(
+          height: 200,
+          width: 200,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.contain,
+              image: AssetImage('assets/images/logo.png'),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
