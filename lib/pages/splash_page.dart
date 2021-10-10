@@ -6,13 +6,20 @@ class SplashPage extends StatefulWidget {
     required this.onInitializationComplete,
   }) : super(key: key);
 
-  final VoidCallback? onInitializationComplete;
+  final VoidCallback onInitializationComplete;
 
   @override
   _SplashPageState createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2))
+        .then((_) => widget.onInitializationComplete());
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
