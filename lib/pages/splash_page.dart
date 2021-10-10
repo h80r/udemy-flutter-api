@@ -1,10 +1,15 @@
 import 'dart:convert';
 
+// Packages
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
+// Models
 import 'package:flickd_app/models/app_config.dart';
+
+// Services
+import 'package:flickd_app/services/http_service.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({
@@ -36,6 +41,8 @@ class _SplashPageState extends State<SplashPage> {
     getIt.registerSingleton<AppConfig>(
       AppConfig.fromJSON(jsonDecode(configFile)),
     );
+
+    getIt.registerSingleton<HttpService>(HttpService());
   }
 
   @override
