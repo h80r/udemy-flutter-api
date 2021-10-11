@@ -25,6 +25,7 @@ class MainPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
+      resizeToAvoidBottomInset: false,
       body: Container(
         constraints: const BoxConstraints.expand(),
         child: Stack(
@@ -66,7 +67,7 @@ class MainPage extends ConsumerWidget {
       padding: EdgeInsets.only(top: _deviceHeight * 0.02),
       width: _deviceWidth * 0.88,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           _topBarWidget(),
           Container(
@@ -153,11 +154,11 @@ class MainPage extends ConsumerWidget {
         language: 'EN',
         isAdult: false,
         description:
-            '''Mortal Kombat is a 2021 martial arts fantasy film based on the 
-          video game franchise of the same name and a reboot of the Mortal 
-          Kombat film series. ... The film follows Cole Young, a washed-up 
-          mixed martial arts fighter who is unaware of his hidden lineage or 
-          why assassin Sub-Zero is hunting him down.''',
+            'Mortal Kombat is a 2021 martial arts fantasy film based on the'
+            'video game franchise of the same name and a reboot of the Mortal '
+            'Kombat film series. ... The film follows Cole Young, a washed-up '
+            'mixed martial arts fighter who is unaware of his hidden lineage '
+            'or why assassin Sub-Zero is hunting him down.',
         posterPath: '/ijvC2w2yANsfgLT3LMu2zFr0fxh.jpg',
         backdropPath: '/9yBVqNruk6Ykrwc32qrK2TIE5xw.jpg',
         rating: 7.8,
