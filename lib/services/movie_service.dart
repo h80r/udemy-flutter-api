@@ -15,9 +15,12 @@ class MovieService {
     _http = _getIt.get<HttpService>();
   }
 
-  Future<List<Movie>> getPopularMovies({int page = 1}) async {
+  Future<List<Movie>> getMovieByCategory({
+    required int page,
+    required String category,
+  }) async {
     final response = await _http.get(
-      '/movie/popular',
+      '/movie/$category',
       userQuery: {'page': page},
     );
 
@@ -30,6 +33,6 @@ class MovieService {
       return movies;
     }
 
-    throw Exception("Couldn't load popular movies");
+    throw Exception("Couldn't load $category movies");
   }
 }

@@ -26,6 +26,7 @@ class MainPage extends ConsumerWidget {
   var _deviceHeight = 0.0;
   var _deviceWidth = 0.0;
 
+  late MainPageDataController _mainPageDataController;
   late MainPageData _mainPageData;
 
   @override
@@ -33,6 +34,8 @@ class MainPage extends ConsumerWidget {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
 
+    _mainPageDataController =
+        context.read(mainPageDataControllerProvider.notifier);
     _mainPageData = watch(mainPageDataControllerProvider);
 
     return Scaffold(
@@ -134,7 +137,7 @@ class MainPage extends ConsumerWidget {
   Widget _categorySelectionWidget() {
     return DropdownButton(
       dropdownColor: Colors.black38,
-      value: SearchCategory.popular,
+      value: _mainPageData.searchCategory,
       icon: const Icon(
         Icons.menu,
         color: Colors.white24,
@@ -143,7 +146,7 @@ class MainPage extends ConsumerWidget {
         height: 1.0,
         color: Colors.white24,
       ),
-      onChanged: (_) => {},
+      onChanged: _mainPageDataController.updateSearchCategory,
       items: SearchCategory.values
           .map(
             (e) => DropdownMenuItem(

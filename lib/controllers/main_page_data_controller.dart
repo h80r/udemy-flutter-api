@@ -1,4 +1,5 @@
 // Packages
+import 'package:flickd_app/models/search_category.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,11 +18,30 @@ class MainPageDataController extends StateNotifier<MainPageData> {
 
   Future<void> getMovies() async {
     try {
-      final movies = await _movieService.getPopularMovies(page: state.page);
+      final movies = await _movieService.getMovieByCategory(
+        category: state.searchCategory.endPoint,
+        page: state.page,
+      );
       state = state.copyWith(
         movies: [...state.movies, ...movies],
         page: state.page + 1,
       );
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void updateSearchCategory(SearchCategory? searchCategory) {
+    try {
+      state = state.copyWith(
+        searchCategory: searchCategory,
+        page: 1,
+        movies: [],
+        searchText: '',
+      );
+      getMovies();
+    } catch (e) {
+      print(e);
+    }
   }
 }

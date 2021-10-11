@@ -1,7 +1,6 @@
 enum SearchCategory {
   popular,
   upcoming,
-  none,
 }
 
 extension CategoryExtension on SearchCategory {
@@ -11,4 +10,6 @@ extension CategoryExtension on SearchCategory {
   };
 
   String get label => labelMap[this] ?? '';
+
+  String get endPoint => label.toLowerCase();
 }
