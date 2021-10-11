@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 // Packages
+import 'package:flickd_app/models/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -65,6 +66,13 @@ class MainPage extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _topBarWidget(),
+          Container(
+            height: _deviceHeight * 0.83,
+            padding: EdgeInsets.symmetric(
+              vertical: _deviceHeight * 0.01,
+            ),
+            child: _moviesListViewWidget(),
+          ),
         ],
       ),
     );
@@ -132,5 +140,45 @@ class MainPage extends ConsumerWidget {
           )
           .toList(),
     );
+  }
+
+  Widget _moviesListViewWidget() {
+    final movies = List.filled(
+      20,
+      Movie(
+        name: 'Mortal Kombat',
+        language: 'EN',
+        isAdult: false,
+        description:
+            '''Mortal Kombat is a 2021 martial arts fantasy film based on the 
+          video game franchise of the same name and a reboot of the Mortal 
+          Kombat film series. ... The film follows Cole Young, a washed-up 
+          mixed martial arts fighter who is unaware of his hidden lineage or 
+          why assassin Sub-Zero is hunting him down.''',
+        posterPath: '/xGu0F1T3wPsAcQEQJfn37Ud9f8.jpg',
+        backdropPath: '/9yBVqNruk6Ykrwc32qrK2TIE5xw.jpg',
+        rating: 7.8,
+        releaseDate: '2021-04-07',
+      ),
+    );
+
+    return movies.isEmpty
+        ? const Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ),
+          )
+        : ListView.builder(
+            itemCount: movies.length,
+            itemBuilder: (_, i) => Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: _deviceHeight * 0.01,
+              ),
+              child: GestureDetector(
+                onTap: () => {},
+                child: Text(movies[i].name),
+              ),
+            ),
+          );
   }
 }
