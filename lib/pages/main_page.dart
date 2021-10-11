@@ -29,6 +29,8 @@ class MainPage extends ConsumerWidget {
   late MainPageDataController _mainPageDataController;
   late MainPageData _mainPageData;
 
+  late TextEditingController _searchTextFieldController;
+
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -37,6 +39,9 @@ class MainPage extends ConsumerWidget {
     _mainPageDataController =
         context.read(mainPageDataControllerProvider.notifier);
     _mainPageData = watch(mainPageDataControllerProvider);
+
+    _searchTextFieldController = TextEditingController();
+    _searchTextFieldController.text = _mainPageData.searchText;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -118,8 +123,9 @@ class MainPage extends ConsumerWidget {
     return SizedBox(
       width: _deviceWidth * 0.5,
       height: _deviceHeight * 0.05,
-      child: TextFormField(
-        onFieldSubmitted: (_) => {},
+      child: TextField(
+        controller: _searchTextFieldController,
+        onSubmitted: _mainPageDataController.updateTextSearch,
         style: const TextStyle(color: Colors.white),
         decoration: const InputDecoration(
           border: InputBorder.none,

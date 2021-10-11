@@ -35,4 +35,29 @@ class MovieService {
 
     throw Exception("Couldn't load $category movies");
   }
+
+  Future<List<Movie>> searchMovies({
+    required String search,
+    int page = 1,
+  }) async {
+    final response = await _http.get(
+      '/search/movie',
+      userQuery: {
+        'page': page,
+        'query': search,
+      },
+    );
+
+    if (response?.statusCode == 200) {
+      final data = response?.data;
+      print(data?['results']);
+      final movies = data?['results']
+          .map<Movie>((e) => Movie.fromJson(e))
+          .toList() as List<Movie>;
+
+      return movies;
+    }
+
+    throw Exception("Couldn't perform movies search");
+  }
 }
