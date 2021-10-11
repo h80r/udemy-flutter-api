@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 // Packages
-import 'package:flickd_app/models/movie.dart';
+import 'package:flickd_app/models/main_page_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,6 +11,14 @@ import 'package:flickd_app/widgets/movie_tile.dart';
 // Models
 import 'package:flickd_app/models/search_category.dart';
 
+// Controllers
+import 'package:flickd_app/controllers/main_page_data_controller.dart';
+
+final mainPageDataControllerProvider =
+    StateNotifierProvider<MainPageDataController, MainPageData>(
+  (ref) => MainPageDataController(),
+);
+
 // ignore: must_be_immutable
 class MainPage extends ConsumerWidget {
   MainPage({Key? key}) : super(key: key);
@@ -18,10 +26,14 @@ class MainPage extends ConsumerWidget {
   var _deviceHeight = 0.0;
   var _deviceWidth = 0.0;
 
+  late MainPageData _mainPageData;
+
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
+
+    _mainPageData = watch(mainPageDataControllerProvider);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -147,24 +159,7 @@ class MainPage extends ConsumerWidget {
   }
 
   Widget _moviesListViewWidget() {
-    final movies = List.filled(
-      20,
-      Movie(
-        name: 'Mortal Kombat',
-        language: 'EN',
-        isAdult: false,
-        description:
-            'Mortal Kombat is a 2021 martial arts fantasy film based on the'
-            'video game franchise of the same name and a reboot of the Mortal '
-            'Kombat film series. ... The film follows Cole Young, a washed-up '
-            'mixed martial arts fighter who is unaware of his hidden lineage '
-            'or why assassin Sub-Zero is hunting him down.',
-        posterPath: '/ijvC2w2yANsfgLT3LMu2zFr0fxh.jpg',
-        backdropPath: '/9yBVqNruk6Ykrwc32qrK2TIE5xw.jpg',
-        rating: 7.8,
-        releaseDate: '2021-04-07',
-      ),
-    );
+    final movies = _mainPageData.movies;
 
     return movies.isEmpty
         ? const Center(

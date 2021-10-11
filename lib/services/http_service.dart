@@ -21,7 +21,6 @@ class HttpService {
   }
 
   Future<Response?> get(String path, {Map<String, dynamic>? userQuery}) async {
-    _apiKey = 'fafas';
     try {
       final url = _baseUrl + path;
       final query = <String, dynamic>{

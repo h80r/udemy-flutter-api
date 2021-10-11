@@ -9,8 +9,7 @@ import 'package:flickd_app/services/movie_service.dart';
 import 'package:flickd_app/models/main_page_data.dart';
 
 class MainPageDataController extends StateNotifier<MainPageData> {
-  MainPageDataController(MainPageData? state)
-      : super(state ?? MainPageData.initial()) {
+  MainPageDataController() : super(MainPageData.initial()) {
     getMovies();
   }
 
@@ -18,7 +17,11 @@ class MainPageDataController extends StateNotifier<MainPageData> {
 
   Future<void> getMovies() async {
     try {
-      var _movies = await _movieService.getPopularMovies(page: state.page);
+      final movies = await _movieService.getPopularMovies(page: state.page);
+      state = state.copyWith(
+        movies: [...state.movies, ...movies],
+        page: state.page + 1,
+      );
     } catch (e) {}
   }
 }
