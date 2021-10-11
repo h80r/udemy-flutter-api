@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
     final configFile = await rootBundle.loadString('assets/config/main.json');
 
     getIt.registerSingleton<AppConfig>(
-      AppConfig.fromJSON(jsonDecode(configFile)),
+      AppConfig.fromJson(jsonDecode(configFile)),
     );
 
     getIt.registerSingleton<HttpService>(HttpService());

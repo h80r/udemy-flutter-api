@@ -9,7 +9,7 @@ class AppConfig {
   final String baseImageApiUrl;
   final String apiKey;
 
-  AppConfig.fromJSON(dynamic json)
+  AppConfig.fromJson(Map<String, dynamic> json)
       : baseApiUrl = json['BASE_API_URL'],
         baseImageApiUrl = json['BASE_IMAGE_API_URL'],
         apiKey = json['API_KEY'];
