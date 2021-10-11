@@ -71,6 +71,30 @@ class MovieTile extends StatelessWidget {
               ),
             ],
           ),
+          Container(
+            padding: EdgeInsets.only(top: height * 0.02),
+            child: Text(
+              movie.language.toUpperCase() +
+                  ' | R: ${movie.isAdult}' +
+                  ' | ${movie.releaseDate}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: height * 0.07),
+            child: Text(
+              movie.description,
+              maxLines: 9,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 10,
+              ),
+            ),
+          ),
         ],
       ),
     );
