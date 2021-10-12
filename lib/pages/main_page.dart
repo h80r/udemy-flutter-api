@@ -19,6 +19,11 @@ final mainPageDataControllerProvider =
   (ref) => MainPageDataController(),
 );
 
+final selectedMoviePosterProvider = StateProvider<String?>((ref) {
+  final movies = ref.watch(mainPageDataControllerProvider).movies;
+  return movies.isNotEmpty ? movies.first.posterUrl : null;
+});
+
 // ignore: must_be_immutable
 class MainPage extends ConsumerWidget {
   MainPage({Key? key}) : super(key: key);
@@ -31,6 +36,8 @@ class MainPage extends ConsumerWidget {
 
   late TextEditingController _searchTextFieldController;
 
+  late StateController<String?> _selectedMoviePoster;
+
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -42,6 +49,8 @@ class MainPage extends ConsumerWidget {
 
     _searchTextFieldController = TextEditingController();
     _searchTextFieldController.text = _mainPageData.searchText;
+
+    _selectedMoviePoster = watch(selectedMoviePosterProvider);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -64,9 +73,9 @@ class MainPage extends ConsumerWidget {
       constraints: const BoxConstraints.expand(),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        image: const DecorationImage(
+        image: DecorationImage(
           image: NetworkImage(
-            'https://images-na.ssl-images-amazon.com/images/I/91B32iU7ayL._AC_SL1500_.jpg',
+            _selectedMoviePoster.state ?? '',
           ),
           fit: BoxFit.cover,
         ),
@@ -192,7 +201,9 @@ class MainPage extends ConsumerWidget {
                   vertical: _deviceHeight * 0.01,
                 ),
                 child: GestureDetector(
-                  onTap: () => {},
+                  onTap: () {
+                    _selectedMoviePoster.state = movies[i].posterUrl;
+                  },
                   child: MovieTile(
                     height: _deviceHeight * 0.2,
                     width: _deviceWidth * 0.85,
