@@ -176,18 +176,28 @@ class MainPage extends ConsumerWidget {
               backgroundColor: Colors.white,
             ),
           )
-        : ListView.builder(
-            itemCount: movies.length,
-            itemBuilder: (_, i) => Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: _deviceHeight * 0.01,
-              ),
-              child: GestureDetector(
-                onTap: () => {},
-                child: MovieTile(
-                  height: _deviceHeight * 0.2,
-                  width: _deviceWidth * 0.85,
-                  movie: movies[i],
+        : NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification is! ScrollEndNotification) return false;
+              final before = notification.metrics.extentBefore;
+              final max = notification.metrics.maxScrollExtent;
+              if (before != max) return false;
+              _mainPageDataController.getMovies();
+              return true;
+            },
+            child: ListView.builder(
+              itemCount: movies.length,
+              itemBuilder: (_, i) => Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: _deviceHeight * 0.01,
+                ),
+                child: GestureDetector(
+                  onTap: () => {},
+                  child: MovieTile(
+                    height: _deviceHeight * 0.2,
+                    width: _deviceWidth * 0.85,
+                    movie: movies[i],
+                  ),
                 ),
               ),
             ),
